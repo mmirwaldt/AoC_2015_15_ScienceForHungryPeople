@@ -4,15 +4,15 @@ import java.util.Map;
 import java.util.Objects;
 
 public class CookieRecipe {
-    private final Map<CookieIngredient, Integer> teasSpoonsByIngredients;
+    private final Map<String, Integer> teasSpoonsByIngredients;
     private final NutritionProperties properties;
 
-    public CookieRecipe(Map<CookieIngredient, Integer> teasSpoonsByIngredients, NutritionProperties properties) {
+    public CookieRecipe(Map<String, Integer> teasSpoonsByIngredients, NutritionProperties properties) {
         this.teasSpoonsByIngredients = teasSpoonsByIngredients;
         this.properties = properties;
     }
 
-    public Map<CookieIngredient, Integer> getTeasSpoonsByIngredients() {
+    public Map<String, Integer> getTeasSpoonsByIngredients() {
         return teasSpoonsByIngredients;
     }
 

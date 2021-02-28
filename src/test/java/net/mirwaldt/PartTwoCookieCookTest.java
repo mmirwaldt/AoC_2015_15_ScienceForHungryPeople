@@ -24,8 +24,6 @@ public class PartTwoCookieCookTest {
         cookieCook.addIngredient("Butterscotch", -1, -2, 6, 3, 8);
         cookieCook.addIngredient("Cinnamon", 2, 3, -2, -1, 3);
         final Map<String, Integer> teasSpoonsByIngredients = Map.of("Butterscotch", 40, "Cinnamon", 60);
-        final NutritionProperties cookieProperties =
-                new NutritionProperties(68, 80, 152, 76, 0);
         final CookieRecipe cookieRecipe = cookieCook.cook(100);
         assertEquals(teasSpoonsByIngredients, cookieRecipe.getTeasSpoonsByIngredients());
         assertEquals(57600000, cookieRecipe.getProperties().calculateScore());

@@ -20,7 +20,7 @@ public abstract class AbstractCookieCook implements CookieCook {
     @Override
     public CookieRecipe cook(int teaSpoons) {
         final NutritionProperties initialProperties =
-                new NutritionProperties(0,0,0,0,0);
+                new NutritionProperties(0, 0, 0, 0, 0);
         return cookRecursively(Collections.emptySortedMap(), teaSpoons,
                 new CookieRecipe(Collections.emptySortedMap(), initialProperties));
     }
@@ -34,7 +34,8 @@ public abstract class AbstractCookieCook implements CookieCook {
             remainingIngredientsByNames.keySet().removeAll(usedIngredients.keySet());
             CookieRecipe nextRecipe = lastRecipe;
             for (CookieIngredient ingredient : remainingIngredientsByNames.values()) {
-                for (int teaSpoons = 1; teaSpoons <= remainingTeaSpoons; teaSpoons++) {
+                int teaSpoons = (1 < remainingIngredientsByNames.size()) ? 1 : remainingTeaSpoons;
+                for (; teaSpoons <= remainingTeaSpoons; teaSpoons++) {
                     final SortedMap<String, Integer> newUsedIngredients = new TreeMap<>(usedIngredients);
                     newUsedIngredients.put(ingredient.getName(), teaSpoons);
                     nextRecipe = cookRecursively(newUsedIngredients,
@@ -79,7 +80,7 @@ public abstract class AbstractCookieCook implements CookieCook {
         final NutritionProperties nutritionProperties = calculateNutritionProperties(usedIngredients);
         final int scoreOfNewRecipe = nutritionProperties.calculateScore();
         final int scoreOfLastRecipe = lastRecipe.getProperties().calculateScore();
-        if(scoreOfLastRecipe < scoreOfNewRecipe) {
+        if (scoreOfLastRecipe < scoreOfNewRecipe) {
             return new CookieRecipe(usedIngredients, nutritionProperties);
         } else {
             return lastRecipe;

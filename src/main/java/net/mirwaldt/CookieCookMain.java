@@ -9,19 +9,33 @@ import java.util.List;
 public class CookieCookMain {
     public static void main(String[] args) throws IOException {
         final List<String> lines = Files.readAllLines(Path.of("input.txt"), StandardCharsets.US_ASCII);
-        final CookieCook cookieCook = new BruteForceCookieCook();
-        addIngredients(lines, cookieCook);
+        final CookieCook partOneCookieCook = new BruteForceCookieCook();
+        addIngredients(lines, partOneCookieCook);
 
-        final CookieRecipe recipe = cookieCook.cook(100);
+        final CookieRecipe partOneRecipe = partOneCookieCook.cook(100);
 
         // {Butterscotch=19, Candy=26, Chocolate=38, Sprinkles=17}
-        System.out.println(recipe.getTeasSpoonsByIngredients());
+        System.out.println(partOneRecipe.getTeasSpoonsByIngredients());
 
         //NutritionProperties{capacity=34, durability=69, flavor=99, texture=92, calories=0}
-        System.out.println(recipe.getProperties());
+        System.out.println(partOneRecipe.getProperties());
 
         // 21367368
-        System.out.println(recipe.getProperties().calculateScore());
+        System.out.println(partOneRecipe.getProperties().calculateScore());
+
+        final CookieCook partTwoCookieCook = new CaloriesConsideringBruteForceCookieCook(500);
+        addIngredients(lines, partTwoCookieCook);
+
+        final CookieRecipe partTwoRecipe = partTwoCookieCook.cook(100);
+
+        // {Butterscotch=14, Candy=10, Chocolate=30, Sprinkles=46}
+        System.out.println(partTwoRecipe.getTeasSpoonsByIngredients());
+
+        // NutritionProperties{capacity=92, durability=60, flavor=16, texture=20, calories=500}
+        System.out.println(partTwoRecipe.getProperties());
+
+        // 1766400
+        System.out.println(partTwoRecipe.getProperties().calculateScore());
     }
 
     public static void addIngredients(List<String> lines, CookieCook cookieCook) {

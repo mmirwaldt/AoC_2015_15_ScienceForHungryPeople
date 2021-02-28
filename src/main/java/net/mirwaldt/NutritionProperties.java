@@ -39,7 +39,7 @@ public class NutritionProperties {
         return calories;
     }
 
-    public int calculateScoreWithoutCalories() {
+    public int calculateScore() {
         return max(0, capacity) * max(0, durability) * max(0, flavor) * max(0, texture);
     }
 

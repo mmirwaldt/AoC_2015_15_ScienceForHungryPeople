@@ -1,6 +1,5 @@
 package net.mirwaldt;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -10,9 +9,9 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CookieCookTest {
+public class PartTwoCookieCookTest {
     private static Stream<Arguments> cookieCook() {
-        return Stream.of(Arguments.of(new BruteForceCookieCook()));
+        return Stream.of(Arguments.of(new CaloriesConsideringBruteForceCookieCook(500)));
     }
 
     @ParameterizedTest
@@ -24,16 +23,11 @@ public class CookieCookTest {
          */
         cookieCook.addIngredient("Butterscotch", -1, -2, 6, 3, 8);
         cookieCook.addIngredient("Cinnamon", 2, 3, -2, -1, 3);
-        final Map<String, Integer> teasSpoonsByIngredients = Map.of("Butterscotch", 44, "Cinnamon", 56);
+        final Map<String, Integer> teasSpoonsByIngredients = Map.of("Butterscotch", 40, "Cinnamon", 60);
         final NutritionProperties cookieProperties =
                 new NutritionProperties(68, 80, 152, 76, 0);
-        assertEquals(new CookieRecipe(teasSpoonsByIngredients, cookieProperties), cookieCook.cook(100));
-    }
-
-    @Test
-    void test_calculateScoreWithoutCalories() {
-        final NutritionProperties cookieProperties =
-                new NutritionProperties(68, 80, 152, 76, 0);
-        assertEquals(62842880, cookieProperties.calculateScoreWithoutCalories());
+        final CookieRecipe cookieRecipe = cookieCook.cook(100);
+        assertEquals(teasSpoonsByIngredients, cookieRecipe.getTeasSpoonsByIngredients());
+        assertEquals(57600000, cookieRecipe.getProperties().calculateScore());
     }
 }

@@ -21,7 +21,7 @@ public class CookieCookMain {
         System.out.println(recipe.getProperties());
 
         // 21367368
-        System.out.println(recipe.getProperties().calculateScoreWithoutCalories());
+        System.out.println(recipe.getProperties().calculateScore());
     }
 
     public static void addIngredients(List<String> lines, CookieCook cookieCook) {

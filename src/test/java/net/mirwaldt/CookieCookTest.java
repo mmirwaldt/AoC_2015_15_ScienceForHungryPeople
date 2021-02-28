@@ -1,5 +1,6 @@
 package net.mirwaldt;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -27,5 +28,12 @@ public class CookieCookTest {
         final NutritionProperties cookieProperties =
                 new NutritionProperties(68, 80, 152, 76, 0);
         assertEquals(new CookieRecipe(teasSpoonsByIngredients, cookieProperties), cookieCook.cook(100));
+    }
+
+    @Test
+    void test_calculateScoreWithoutCalories() {
+        final NutritionProperties cookieProperties =
+                new NutritionProperties(68, 80, 152, 76, 0);
+        assertEquals(62842880, cookieProperties.calculateScoreWithoutCalories());
     }
 }

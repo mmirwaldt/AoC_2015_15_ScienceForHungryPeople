@@ -31,7 +31,9 @@ public class BruteForceCookieCook implements CookieCook {
             SortedMap<String, Integer> usedIngredients, int remainingTeaSpoons, List<CookieRecipe> recipes) {
         if (usedIngredients.size() == ingredientsByNames.size()) {
             final NutritionProperties nutritionProperties = calculateNutritionProperties(usedIngredients);
-            recipes.add(new CookieRecipe(usedIngredients, nutritionProperties));
+            if(0 < nutritionProperties.calculateScoreWithoutCalories()) {
+                recipes.add(new CookieRecipe(usedIngredients, nutritionProperties));
+            }
         } else {
             final SortedMap<String, CookieIngredient> remainingIngredientsByNames = new TreeMap<>(ingredientsByNames);
             remainingIngredientsByNames.keySet().removeAll(usedIngredients.keySet());

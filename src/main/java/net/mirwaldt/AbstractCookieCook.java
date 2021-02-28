@@ -34,7 +34,9 @@ public abstract class AbstractCookieCook implements CookieCook {
             remainingIngredientsByNames.keySet().removeAll(usedIngredients.keySet());
             CookieRecipe nextRecipe = lastRecipe;
             for (CookieIngredient ingredient : remainingIngredientsByNames.values()) {
+                // we must use all tea spoons!
                 int teaSpoons = (1 < remainingIngredientsByNames.size()) ? 1 : remainingTeaSpoons;
+
                 for (; teaSpoons <= remainingTeaSpoons; teaSpoons++) {
                     final SortedMap<String, Integer> newUsedIngredients = new TreeMap<>(usedIngredients);
                     newUsedIngredients.put(ingredient.getName(), teaSpoons);

@@ -13,7 +13,7 @@ public class CaloriesConsideringBruteForceCookieCook extends AbstractCookieCook 
     protected CookieRecipe selectCookieRecipe(SortedMap<String, Integer> usedIngredients, CookieRecipe lastRecipe) {
         final NutritionProperties nutritionProperties = calculateNutritionProperties(usedIngredients);
         if(nutritionProperties.getCalories() == expectedCalories) {
-            return selectCookieRecipeWithHigerScore(usedIngredients, lastRecipe);
+            return selectCookieRecipeWithHigherScore(usedIngredients, nutritionProperties, lastRecipe);
         } else {
             return lastRecipe;
         }

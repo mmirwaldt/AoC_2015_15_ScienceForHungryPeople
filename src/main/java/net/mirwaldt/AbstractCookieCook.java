@@ -75,9 +75,15 @@ public abstract class AbstractCookieCook implements CookieCook {
         return new NutritionProperties(capacity, durability, flavor, texture, calories);
     }
 
-    protected CookieRecipe selectCookieRecipeWithHigerScore(
+    protected CookieRecipe selectCookieRecipeWithHigherScore(
             SortedMap<String, Integer> usedIngredients, CookieRecipe lastRecipe) {
         final NutritionProperties nutritionProperties = calculateNutritionProperties(usedIngredients);
+        return selectCookieRecipeWithHigherScore(usedIngredients, nutritionProperties, lastRecipe);
+    }
+
+    protected CookieRecipe selectCookieRecipeWithHigherScore(
+            SortedMap<String, Integer> usedIngredients, NutritionProperties nutritionProperties,
+            CookieRecipe lastRecipe) {
         final int scoreOfNewRecipe = nutritionProperties.calculateScore();
         final int scoreOfLastRecipe = lastRecipe.getProperties().calculateScore();
         if (scoreOfLastRecipe < scoreOfNewRecipe) {

@@ -14,8 +14,13 @@ public class CookieCookMain {
 
         final CookieRecipe recipe = cookieCook.cook(100);
 
+        // {Butterscotch=19, Candy=26, Chocolate=38, Sprinkles=17}
         System.out.println(recipe.getTeasSpoonsByIngredients());
+
+        //NutritionProperties{capacity=34, durability=69, flavor=99, texture=92, calories=0}
         System.out.println(recipe.getProperties());
+
+        // 21367368
         System.out.println(recipe.getProperties().calculateScoreWithoutCalories());
     }
 

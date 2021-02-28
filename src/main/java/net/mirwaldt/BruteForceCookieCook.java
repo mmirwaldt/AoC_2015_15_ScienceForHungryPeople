@@ -16,34 +16,34 @@ public class BruteForceCookieCook implements CookieCook {
 
     @Override
     public CookieRecipe cook(int teaSpoons) {
-        final List<CookieRecipe> cookieRecipes = new ArrayList<>();
-        cookRecursively(Collections.emptySortedMap(), teaSpoons, cookieRecipes);
-        cookieRecipes.sort(createCookieScoreComparator());
-        return cookieRecipes.get(0);
+        final NutritionProperties initialProperties =
+                new NutritionProperties(0,0,0,0,0);
+        return cookRecursively(Collections.emptySortedMap(), teaSpoons,
+                new CookieRecipe(Collections.emptySortedMap(), initialProperties));
     }
 
-    private Comparator<CookieRecipe> createCookieScoreComparator() {
-        return Comparator.<CookieRecipe>comparingInt(cookieRecipe ->
-                cookieRecipe.getProperties().calculateScoreWithoutCalories()).reversed();
-    }
-
-    private void cookRecursively(
-            SortedMap<String, Integer> usedIngredients, int remainingTeaSpoons, List<CookieRecipe> recipes) {
+    private CookieRecipe cookRecursively(
+            SortedMap<String, Integer> usedIngredients, int remainingTeaSpoons, CookieRecipe lastRecipe) {
         if (usedIngredients.size() == ingredientsByNames.size()) {
             final NutritionProperties nutritionProperties = calculateNutritionProperties(usedIngredients);
-            if(0 < nutritionProperties.calculateScoreWithoutCalories()) {
-                recipes.add(new CookieRecipe(usedIngredients, nutritionProperties));
+            if(lastRecipe.getProperties().calculateScoreWithoutCalories() < nutritionProperties.calculateScoreWithoutCalories()) {
+                return new CookieRecipe(usedIngredients, nutritionProperties);
+            } else {
+                return lastRecipe;
             }
         } else {
             final SortedMap<String, CookieIngredient> remainingIngredientsByNames = new TreeMap<>(ingredientsByNames);
             remainingIngredientsByNames.keySet().removeAll(usedIngredients.keySet());
+            CookieRecipe nextRecipe = lastRecipe;
             for (CookieIngredient ingredient : remainingIngredientsByNames.values()) {
                 for (int teaSpoons = 1; teaSpoons <= remainingTeaSpoons; teaSpoons++) {
                     final SortedMap<String, Integer> newUsedIngredients = new TreeMap<>(usedIngredients);
                     newUsedIngredients.put(ingredient.getName(), teaSpoons);
-                    cookRecursively(newUsedIngredients, remainingTeaSpoons - teaSpoons, recipes);
+                    nextRecipe = cookRecursively(newUsedIngredients,
+                            remainingTeaSpoons - teaSpoons, nextRecipe);
                 }
             }
+            return nextRecipe;
         }
     }
 

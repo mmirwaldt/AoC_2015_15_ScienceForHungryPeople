@@ -1,4 +1,4 @@
-package net.mirwaldt;
+package net.mirwaldt.aoc.year2015.day15;
 
 import java.util.Collections;
 import java.util.Map;
